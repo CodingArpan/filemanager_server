@@ -1,5 +1,4 @@
 
-```markdown
 # File Storage Manager
 
 File Storage Manager is a Spring Boot application designed to manage file uploads, storage, and access in a secure manner. This project leverages Spring Security for authentication and Amazon S3 for file storage, providing a robust backend system for handling file operations securely and efficiently.
