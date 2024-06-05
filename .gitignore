@@ -48,7 +48,7 @@ build/
 *.jar
 *.war
 *.ear
-*.env
+
 # Spring Boot #
 /target/
 /build/
@@ -72,3 +72,6 @@ build/
 .classpath
 .settings/
 bin/
+# custom folders & files
+*.env
+application-prod.properties
