@@ -48,7 +48,7 @@ build/
 *.jar
 *.war
 *.ear
-
+*.env
 # Spring Boot #
 /target/
 /build/

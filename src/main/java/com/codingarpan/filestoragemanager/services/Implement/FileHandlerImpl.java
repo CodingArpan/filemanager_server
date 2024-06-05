@@ -35,7 +35,7 @@ public class FileHandlerImpl implements FileHandler {
         objectMetadata.setContentType(file.getContentType());
         objectMetadata.setContentLength(file.getSize());
         try {
-            client.putObject(bucketName, newfileName, file.getInputStream(), null);
+            client.putObject(bucketName, newfileName, file.getInputStream(), objectMetadata);
             ImageInfoDTO imageInfoDTO = new ImageInfoDTO();
             imageInfoDTO.setEmail(email);
             imageInfoDTO.setImagename(newfileName);

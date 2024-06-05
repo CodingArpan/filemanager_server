@@ -34,21 +34,24 @@ cd filestoragemanager
 
 ### Configure Application Properties
 
-1. **Database Configuration**: Update `src/main/resources/application.properties` with your MySQL database credentials:
+Update `src/main/resources/application.properties` with your MySQL database credentials and AWS S3 configuration:
 
-    ```properties
-    spring.datasource.url=jdbc:mysql://localhost:3306/your_database
-    spring.datasource.username=your_username
-    spring.datasource.password=your_password
-    ```
+```properties
+# MySQL Configuration
+spring.datasource.url=jdbc:mysql://localhost:3306/your_database
+spring.datasource.username=your_username
+spring.datasource.password=your_password
 
-2. **AWS S3 Configuration**: Set your AWS credentials and bucket name in the same `application.properties` file:
+# AWS S3 Configuration
+cloud.aws.credentials.accessKey=YOUR_AWS_ACCESS_KEY
+cloud.aws.credentials.secretKey=YOUR_AWS_SECRET_KEY
+cloud.aws.region.static=YOUR_AWS_REGION
+app.s3.bucketName=YOUR_BUCKET_NAME
 
-    ```properties
-    aws.accessKeyId=YOUR_AWS_ACCESS_KEY
-    aws.secretKey=YOUR_AWS_SECRET_KEY
-    app.s3.bucketName=YOUR_BUCKET_NAME
-    ```
+# JWT Configuration
+jwt.secret=YOUR_SECRET_KEY
+jwt.expiration=86400000
+```
 
 ### Build and Run
 
@@ -65,53 +68,54 @@ The application should now be running on `http://localhost:8080`.
 
 ### API Endpoints
 
-- **User Authentication**
-    - `POST /api/auth/signup`: Register a new user.
-    - `POST /api/auth/login`: Authenticate a user and return a JWT.
+#### User Authentication
 
-- **File Handling**
-    - `POST /api/v1/upload`: Upload a file to AWS S3.
-    - `POST /api/v1/allfiles`: List all files for the authenticated user.
-    - `GET /api/v1/download/{filename}`: Generate a presigned URL to download the specified file.
+- **Signup**
 
-### Example Requests
+    ```bash
+    curl -X POST http://localhost:8080/api/auth/signup \
+    -H 'Content-Type: application/json' \
+    -d '{
+        "email": "user@example.com",
+        "password": "password123"
+    }'
+    ```
 
-**Signup**
+- **Login**
 
-```bash
-curl -X POST http://localhost:8080/api/auth/signup \
--H 'Content-Type: application/json' \
--d '{
-    "email": "user@example.com",
-    "password": "password123"
-}'
-```
+    ```bash
+    curl -X POST http://localhost:8080/api/auth/login \
+    -H 'Content-Type: application/json' \
+    -d '{
+        "email": "user@example.com",
+        "password": "password123"
+    }'
+    ```
 
-**Login**
+- **Logout**
 
-```bash
-curl -X POST http://localhost:8080/api/auth/login \
--H 'Content-Type: application/json' \
--d '{
-    "email": "user@example.com",
-    "password": "password123"
-}'
-```
+    ```bash
+    curl -X POST http://localhost:8080/api/auth/logout
+    ```
 
-**Upload File**
+#### File Handling
 
-```bash
-curl -X POST http://localhost:8080/api/v1/upload \
--H "Authorization: Bearer Your_Jwt_Token" \
--F "file=@path_to_your_file"
-```
+- **Upload File**
 
-**List Files**
+    ```bash
+    curl -X POST http://localhost:8080/api/v1/upload \
+    -H "Authorization: Bearer Your_Jwt_Token" \
+    -F "file=@path_to_your_file"
+    ```
 
-```bash
-curl -X POST http://localhost:8080/api/v1/allfiles \
--H "Authorization: Bearer Your_Jwt_Token"
-```
+- **List All Files**
+
+    ```bash
+    curl -X POST http://localhost:8080/api/v1/allfiles \
+    -H "Authorization: Bearer Your_Jwt_Token"
+    ```
+
+
 
 ## Contributing
 
@@ -120,6 +124,6 @@ Contributions are welcome! For major changes, please open an issue first to disc
 ## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
-```
 
-This markdown content provides a comprehensive guide to setting up and using the File Storage Manager project. Adjust the commands and configurations as necessary to match your development environment and AWS settings.
+
+This `README.md` file provides a comprehensive guide to setting up, running, and using your Spring Boot file storage manager application. Make sure to replace placeholders like `your-username`, `your_database`, `your_username`, `your_password`, `YOUR_AWS_ACCESS_KEY`, `YOUR_AWS_SECRET_KEY`, `YOUR_AWS_REGION`, `YOUR_BUCKET_NAME`, and `YOUR_SECRET_KEY` with actual values.
